@@ -59,7 +59,7 @@ export function handleDeployIdentity(event: DeployIdentity): void {
   identity.state = 10;
   identity.wallet = wallet.id;
   wallet.name = event.params.name;
-  wallet.identity = identity.id;
+  //wallet.identity = identity.id;
   identity.lastModification = event.block.timestamp;
   identity.creationTime = event.block.timestamp;
 
