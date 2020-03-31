@@ -16,10 +16,10 @@ export function handleNewToken(event: NewToken): void {
 }
 
 function addToken(tokenAddress: Address, event: NewToken): void {
-    let token = Token.load(tokenAddress.toHexString());
+    //let token = Token.load(tokenAddress.toHexString());
 
-    if (token == null) {
-        token = new Token(tokenAddress.toHexString());
+    //if (token == null) {
+        let token = new Token(tokenAddress.toHexString());
         /*let contract = TokenContract.bind(tokenAddress);
     
         token.tokenSymbol = contract.symbol();
@@ -33,5 +33,5 @@ function addToken(tokenAddress: Address, event: NewToken): void {
         //token.totalSupply = contract.totalSupply().toBigDecimal();
     
         token.save();
-    } 
+    //} 
 }
