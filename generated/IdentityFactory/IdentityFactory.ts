@@ -53,9 +53,9 @@ export class DeployIdentity__Params {
   }
 }
 
-export class Contract extends SmartContract {
-  static bind(address: Address): Contract {
-    return new Contract("Contract", address);
+export class IdentityFactory extends SmartContract {
+  static bind(address: Address): IdentityFactory {
+    return new IdentityFactory("IdentityFactory", address);
   }
 
   on(): boolean {

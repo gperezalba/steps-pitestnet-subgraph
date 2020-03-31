@@ -3,11 +3,11 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Contract
+    name: IdentityFactory
     network: mainnet
     source:
       address: "0xFaA9e9AD1c7788666BF40967E9cf63D8e7b2142E"
-      abi: Contract
+      abi: IdentityFactory
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -15,9 +15,9 @@ dataSources:
       entities:
         - DeployIdentity
       abis:
-        - name: Contract
-          file: ./abis/Contract.json
+        - name: IdentityFactory
+          file: ./abis/IdentityFactory.json
       eventHandlers:
         - event: DeployIdentity(indexed address,indexed address,address,indexed address,string,bytes32)
           handler: handleDeployIdentity
-      file: ./src/mapping.ts
+      file: ./src/identityFactory.ts
