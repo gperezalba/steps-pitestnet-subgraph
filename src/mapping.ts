@@ -1,8 +1,8 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, Address } from "@graphprotocol/graph-ts"
 import { Contract, DeployIdentity } from "../generated/Contract/Contract"
-import { ExampleEntity } from "../generated/schema"
+import { ExampleEntity, Identity, Wallet } from "../generated/schema"
 
-export function handleDeployIdentity(event: DeployIdentity): void {
+/*export function handleDeployIdentity(event: DeployIdentity): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
   let entity = ExampleEntity.load(event.transaction.from.toHex())
@@ -44,4 +44,40 @@ export function handleDeployIdentity(event: DeployIdentity): void {
   // - contract.on(...)
   // - contract.deployIdentity(...)
   // - contract.deployIdentity(...)
+}*/
+
+export function handleDeployIdentity(event: DeployIdentity): void {
+  let identityAddress = event.params.identity.toHexString();
+  let identity = new Identity(identityAddress);
+  loadWallet(event.params.wallet);
+  let wallet = Wallet.load(event.params.wallet.toString());
+
+  //initialize identity vars
+  identity.dataHash = event.params.dataHash;
+  identity.owner = event.params.owner;
+  identity.recovery = event.params.recovery;
+  identity.state = 10;
+  identity.wallet = wallet.id;
+  wallet.name = event.params.name;
+  wallet.identity = identity.id;
+  identity.lastModification = event.block.timestamp;
+  identity.creationTime = event.block.timestamp;
+
+  identity.save();
+  wallet.save();
+
+  ////IdentityContract.create(event.params.identity);
+  //WalletContract.create(event.params.wallet);
+}
+
+export function loadWallet(address: Address): Wallet {
+  let wallet = Wallet.load(address.toString());
+  
+  if (wallet == null) {
+      wallet = new Wallet(address.toString());
+  }
+
+  wallet.save();
+
+  return wallet as Wallet;
 }
