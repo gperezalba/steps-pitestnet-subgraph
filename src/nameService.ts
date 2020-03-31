@@ -10,6 +10,14 @@ export function handleCreateName(event: CreateName): void {
     setOwner(event.params.name, event.params.owner);
 }
 
+export function handleChangeWallet(event: ChangeWallet): void {
+    setWallet(event.params.name, event.params.wallet.toString());
+}
+
+export function handleChangeOwner(event: ChangeOwner): void {
+    setOwner(event.params.name, event.params.newOwner);
+}
+
 function setWallet(id: string, wallet: string): void {
     let name = Name.load(id);
 
