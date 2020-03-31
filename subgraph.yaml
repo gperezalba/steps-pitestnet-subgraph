@@ -76,7 +76,7 @@ dataSources:
       apiVersion: 0.0.3
       language: wasm/assemblyscript
       entities:
-        - Token
+        - NewToken
       abis:
         - name: AddToken
           file: ./abis/AddToken.json
