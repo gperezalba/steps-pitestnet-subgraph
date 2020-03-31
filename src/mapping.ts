@@ -50,7 +50,7 @@ export function handleDeployIdentity(event: DeployIdentity): void {
   let identityAddress = event.params.identity.toHexString();
   let identity = new Identity(identityAddress);
   loadWallet(event.params.wallet);
-  let wallet = Wallet.load(event.params.wallet.toString());
+  let wallet = Wallet.load(event.params.wallet.toHexString());
 
   //initialize identity vars
   identity.dataHash = event.params.dataHash;
@@ -71,10 +71,10 @@ export function handleDeployIdentity(event: DeployIdentity): void {
 }
 
 export function loadWallet(address: Address): Wallet {
-  let wallet = Wallet.load(address.toString());
+  let wallet = Wallet.load(address.toHexString());
   
   if (wallet == null) {
-      wallet = new Wallet(address.toString());
+      wallet = new Wallet(address.toHexString());
   }
 
   wallet.save();
