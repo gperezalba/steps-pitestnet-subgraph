@@ -12,20 +12,25 @@ import {
 import { Token as TokenContract } from "../generated/templates/Token/Token"
 
 export function handleNewToken(event: NewToken): void {
-    addToken(event.params.tokenAddress)
+    addToken(event.params.tokenAddress, event)
 }
 
-function addToken(tokenAddress: Address): void {
+function addToken(tokenAddress: Address, event: NewToken): void {
     let token = Token.load(tokenAddress.toString());
 
     if (token == null) {
         token = new Token(tokenAddress.toString());
-        let contract = TokenContract.bind(tokenAddress);
+        /*let contract = TokenContract.bind(tokenAddress);
     
         token.tokenSymbol = contract.symbol();
         token.tokenName = contract.name();
         token.tokenDecimals = contract.decimals();
-        token.totalSupply = contract.totalSupply().toBigDecimal();
+        token.totalSupply = contract.totalSupply().toBigDecimal();*/
+
+        token.tokenSymbol = event.params.symbol;
+        token.tokenName = event.params.name;
+        //token.tokenDecimals = contract.decimals();
+        //token.totalSupply = contract.totalSupply().toBigDecimal();
     
         token.save();
     } 
