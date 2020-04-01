@@ -69,7 +69,7 @@ dataSources:
     name: AddToken
     network: mainnet
     source:
-      address: "0xE26484d6922a5fAE50CFc4260841a55Ebf0803F1"
+      address: "0x0256c7744cEB86f1d109fd050487c1fbc4448F22"
       abi: AddToken
     mapping:
       kind: ethereum/events
