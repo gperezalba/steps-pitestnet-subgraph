@@ -3,6 +3,7 @@ import { TokenCreated } from "../generated/TokenFactory/TokenFactory"
 import { Token } from "../generated/schema"
 
 import { Token as TokenContract } from "../generated/templates/Token/Token"
+import { Token as TokenTemplate } from "../generated/templates"
 
 export function handleTokenCreated(event: TokenCreated): void {
     addToken(event.params._address);
