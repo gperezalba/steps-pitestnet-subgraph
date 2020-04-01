@@ -8,7 +8,7 @@ export function handleTokenCreated(event: TokenCreated): void {
     let token = Token.load(event.params._address.toHexString());
 
     if (token == null) {
-        token = new TokenFactory(event.params._address.toHexString());
+        token = new Token(event.params._address.toHexString());
         let contract = TokenContract.bind(tokenAddress);
     
         token.tokenSymbol = contract.symbol();
