@@ -38,13 +38,13 @@ export function newTransaction(event: Transfer): void {
         );
     }
 
-    if (event.params.from == Address.fromI32(0)) {
+    /*if (event.params.from == Address.fromI32(0)) {
         handleTokenMint(event.address.toString(), event.params.value.toBigDecimal());
     }
 
     if (event.params.to == Address.fromI32(0)) {
         handleTokenBurn(event.address.toString(), event.params.value.toBigDecimal());
-    }
+    }*/
 
     //pushWalletTransaction(tx as Transaction, event.params.to.toString());
     //pushWalletTransaction(tx as Transaction, event.params.from.toString());
