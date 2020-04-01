@@ -17,8 +17,6 @@ dataSources:
       abis:
         - name: IdentityFactory
           file: ./abis/IdentityFactory.json
-        - name: Token
-          file: ./abis/Token.json
       eventHandlers:
         - event: DeployIdentity(indexed address,indexed address,address,indexed address,string,bytes32)
           handler: handleDeployIdentity
@@ -63,6 +61,8 @@ dataSources:
       abis:
         - name: TokenFactory
           file: ./abis/TokenFactory.json
+        - name: Token
+          file: ./abis/Token.json
       eventHandlers:
         - event: TokenCreated(indexed address,string,string,address,uint256)
           handler: handleTokenCreated
