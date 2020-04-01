@@ -18,6 +18,9 @@ export function handleNewToken(event: NewToken): void {
 function addToken(tokenAddress: Address, event: NewToken): void {
     let token = new Token(tokenAddress.toHexString());
     token.tokenSymbol = "TK"
+    token.tokenName = "nametk"
+    token.tokenDecimals = 18;
+    token.totalSupply = 1000000000;
     token.save();
 
     /*let token = Token.load(tokenAddress.toHexString());
