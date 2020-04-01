@@ -1,11 +1,11 @@
 import { Address, BigDecimal } from "@graphprotocol/graph-ts"
 import { TokenCreated } from "../generated/TokenFactory/TokenFactory"
-import { TokenFactory } from "../generated/schema"
+import { Token } from "../generated/schema"
 
 import { Token as TokenContract } from "../generated/templates/Token/Token"
 
 export function handleTokenCreated(event: TokenCreated): void {
-    let token = TokenFactory.load(event.params._address.toHexString());
+    let token = Token.load(event.params._address.toHexString());
 
     if (token == null) {
         token = new TokenFactory(event.params._address.toHexString());
