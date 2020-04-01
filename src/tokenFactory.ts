@@ -5,12 +5,15 @@ import { Token } from "../generated/schema"
 import { Token as TokenContract } from "../generated/templates/Token/Token"
 
 export function handleTokenCreated(event: TokenCreated): void {
-    let token = Token.load(event.params._address.toHexString());
+    addToken(event.params.address);
+}
+
+function addToken(tokenAddress: Address): void {
+    let token = Token.load(tokenAddress.toHexString());
 
     if (token == null) {
-        token = new Token(event.params._address.toHexString());
-        let contract = TokenContract.bind(event.params._address);
-        //let contract = Token.bind(event.params._address);
+        token = new Token(tokenAddress.toHexString());
+        let contract = TokenContract.bind(tokenAddress);
     
         token.tokenSymbol = contract.symbol();
         token.tokenName = contract.name();
