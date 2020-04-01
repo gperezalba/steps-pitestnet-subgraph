@@ -7,7 +7,12 @@ export function handleTokenCreated(event: TokenCreated): void {
 
     if (token == null) {
         token = new TokenFactory(event.params._address.toHexString());
-        token.tkName = "TK"
+        let contract = TokenContract.bind(tokenAddress);
+    
+        token.tokenSymbol = contract.symbol();
+        token.tokenName = contract.name();
+        token.tokenDecimals = contract.decimals();
+        token.totalSupply = contract.totalSupply().toBigDecimal();
     }
 
     token.save();
