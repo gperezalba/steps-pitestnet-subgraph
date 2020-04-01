@@ -21,7 +21,7 @@ function addToken(tokenAddress: Address): void {
         token.tokenDecimals = contract.decimals();
         token.totalSupply = contract.totalSupply().toBigDecimal();
 
-        TokenContract.create(tokenAddress);
+        TokenTemplate.create(tokenAddress);
     }
 
     token.save();
