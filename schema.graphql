@@ -11,6 +11,11 @@ type Identity @entity {
     loans: [Loan!]
 }
 
+type TokenFactory @entity {
+    id: ID!
+    tkName: String!
+}
+
 type Token @entity {
     id: ID! #token_address
     tokenDecimals: Int!
