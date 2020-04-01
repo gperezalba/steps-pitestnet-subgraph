@@ -29,7 +29,7 @@ export function newTransaction(event: Transfer): void {
             txId, 
             event.params.from, 
             event.params.to, 
-            event.address.toString(), 
+            event.address.toHexString(), 
             event.params.value.toBigDecimal(), 
             event.params.data, 
             event.block.timestamp, 
