@@ -46,3 +46,85 @@ dataSources:
         - event: ChangeOwner(string,indexed address)
           handler: handleChangeOwner
       file: ./src/nameService.ts
+  - kind: ethereum/contract
+    name: Balance
+    network: mainnet
+    source:
+      address: "0xa062614032C38396464c593C4866de4e9A3014ed"
+      abi: Balance
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - Token
+      abis:
+        - name: Balance
+          file: ./abis/Balance.json
+      callHandlers:
+        - function: f()
+          handler: handleGetBalance
+      file: ./src/balance.ts
+  - kind: ethereum/contract
+    name: AddToken
+    network: mainnet
+    source:
+      address: "0xf5f9c31dcE07322A216b510C339292b4742B896C"
+      abi: AddToken
+      startBlock: 2
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - NewToken
+      abis:
+        - name: AddToken
+          file: ./abis/AddToken.json
+      eventHandlers:
+        - event: NewToken(address,string,string)
+          handler: handleNewToken
+        - event: NewHolders(address,address[])
+          handler: handleNewHolders
+      file: ./src/token.ts
+  - kind: ethereum/contract
+    name: TokenFactory
+    network: mainnet
+    source:
+      address: "0xAB79e6CF3C310B4663511ED5BCb116D5a0F810aA"
+      abi: TokenFactory
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - TokenCreated
+      abis:
+        - name: TokenFactory
+          file: ./abis/TokenFactory.json
+      eventHandlers:
+        - event: TokenCreated(indexed address,string,string,address,uint256)
+          handler: handleTokenCreated
+      file: ./src/tokenFactory.ts
+templates:
+  - name: Token
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: Token
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/token.ts
+      entities:
+        - Token
+        - Transaction
+        - TokenBalance
+        - Wallet
+      abis:
+        - name: Token
+          file: ./abis/Token.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256,indexed bytes)
+          handler: handleTransfer
