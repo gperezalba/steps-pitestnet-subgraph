@@ -18,6 +18,7 @@ export function handleNewToken(event: NewToken): void {
 function addToken(tokenAddress: Address, event: NewToken): void {
     let token = new Token(tokenAddress.toHexString());
     token.tokenSymbol = "TK"
+    token.save();
 
     /*let token = Token.load(tokenAddress.toHexString());
 
