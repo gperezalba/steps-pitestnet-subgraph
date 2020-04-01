@@ -89,3 +89,25 @@ templates:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256,indexed bytes)
           handler: handleTransfer
+  - name: Wallet
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: Wallet
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/wallet.ts
+      entities:
+        - Wallet
+        - Token
+        - Transaction
+        - BankTransaction
+        - BankFee
+      abis:
+        - name: Wallet
+          file: ./abis/Wallet.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed uint256,indexed address,uint256,uint256,bytes)
+          handler: handleTransfer

@@ -1,6 +1,8 @@
 import { Address } from "@graphprotocol/graph-ts"
 import { DeployIdentity } from "../generated/IdentityFactory/IdentityFactory"
 import { Identity, Wallet } from "../generated/schema"
+import { Identity as IdentityTemplate } from "../generated/templates"
+import { Wallet as WalletTemplate } from "../generated/templates"
 
 export function handleDeployIdentity(event: DeployIdentity): void {
   let identityAddress = event.params.identity.toHexString();
@@ -21,8 +23,8 @@ export function handleDeployIdentity(event: DeployIdentity): void {
   identity.save();
   wallet.save();
 
-  //IdentityContract.create(event.params.identity);
-  //WalletContract.create(event.params.wallet);
+  //IdentityTemplate.create(event.params.identity);
+  //WalletTemplate.create(event.params.wallet);
 }
 
 export function loadWallet(address: Address): Wallet {

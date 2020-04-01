@@ -7,3 +7,9 @@ export class Token extends DataSourceTemplate {
     DataSourceTemplate.create("Token", [address.toHex()]);
   }
 }
+
+export class Wallet extends DataSourceTemplate {
+  static create(address: Address): void {
+    DataSourceTemplate.create("Wallet", [address.toHex()]);
+  }
+}
