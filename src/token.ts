@@ -9,7 +9,7 @@ import {
     Wallet
 } from "../generated/schema"
 
-import { Token as TokenContract } from "../generated/templates/Token/Token"
+//import { Token as TokenContract } from "../generated/templates/Token/Token"
 
 export function handleNewToken(event: NewToken): void {
     addToken(event.params.tokenAddress, event)
