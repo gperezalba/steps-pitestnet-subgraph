@@ -5,7 +5,7 @@ import { Token } from "../generated/schema"
 import { Token as TokenContract } from "../generated/templates/Token/Token"
 
 export function handleTokenCreated(event: TokenCreated): void {
-    addToken(event.params.address);
+    addToken(event.params._address);
 }
 
 function addToken(tokenAddress: Address): void {
