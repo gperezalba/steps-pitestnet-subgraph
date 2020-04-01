@@ -71,6 +71,7 @@ dataSources:
     source:
       address: "0xf5f9c31dcE07322A216b510C339292b4742B896C"
       abi: AddToken
+      startBlock: 2
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
