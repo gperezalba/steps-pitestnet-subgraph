@@ -86,6 +86,25 @@ dataSources:
         - event: NewHolders(address,address[])
           handler: handleNewHolders
       file: ./src/token.ts
+  - kind: ethereum/contract
+    name: TokenFactory
+    network: mainnet
+    source:
+      address: "0xAB79e6CF3C310B4663511ED5BCb116D5a0F810aA"
+      abi: TokenFactory
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - TokenCreated
+      abis:
+        - name: TokenFactory
+          file: ./abis/TokenFactory.json
+      eventHandlers:
+        - event: TokenCreated(indexed address,string,string,address,uint256)
+          handler: handleTokenCreated
+      file: ./src/tokenFactory.ts
 templates:
   - name: Token
     kind: ethereum/contract
