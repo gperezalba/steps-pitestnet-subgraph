@@ -1,8 +1,8 @@
 import { Address } from "@graphprotocol/graph-ts"
-import { CreatedToken } from "../generated/IdentityFactory/IdentityFactory"
+import { TokenCreated } from "../generated/IdentityFactory/IdentityFactory"
 import { Token } from "../generated/schema"
 
-export function handleCreatedToken(event: CreatedToken): void {
+export function handleCreatedToken(event: TokenCreated): void {
     let token = Token.load(event.param._address.toHexString());
 
     if (token == null) {
