@@ -65,3 +65,25 @@ dataSources:
         - event: TokenCreated(indexed address,string,string,address,uint256)
           handler: handleTokenCreated
       file: ./src/tokenFactory.ts
+templates:
+  - name: Token
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: Token
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/token.ts
+      entities:
+        - Token
+        - Transaction
+        - TokenBalance
+        - Wallet
+      abis:
+        - name: Token
+          file: ./abis/Token.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256,indexed bytes)
+          handler: handleTransfer
