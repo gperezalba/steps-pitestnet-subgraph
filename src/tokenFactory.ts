@@ -1,5 +1,5 @@
 import { Address } from "@graphprotocol/graph-ts"
-import { TokenCreated } from "../generated/IdentityFactory/IdentityFactory"
+import { TokenCreated } from "../generated/TokenFactory/TokenFactory"
 import { Token } from "../generated/schema"
 
 export function handleCreatedToken(event: TokenCreated): void {
