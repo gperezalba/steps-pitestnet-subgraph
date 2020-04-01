@@ -20,7 +20,7 @@ function addToken(tokenAddress: Address, event: NewToken): void {
     token.tokenSymbol = "TK"
     token.tokenName = "nametk"
     token.tokenDecimals = 18;
-    token.totalSupply = 1000000000;
+    token.totalSupply = 1000000000 as BigDecimal;
     token.save();
 
     /*let token = Token.load(tokenAddress.toHexString());
