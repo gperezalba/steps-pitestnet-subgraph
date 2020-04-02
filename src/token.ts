@@ -40,8 +40,8 @@ function addTokenHolder(tokenAddress: string, holder: string): void {
         let currentHolders = token.holders;
 
         //Si el holder no está en el array ya, lo incluyo
-        if (!currentHolders.includes(tokenBalance.id)) {
-            currentHolders.push(tokenBalance.id);
+        if (!currentHolders.includes(id)) {
+            currentHolders.push(id);
             token.holders = currentHolders;
             token.save();
         }
@@ -127,9 +127,9 @@ export function updateTokenBalance(tokenAddress: Address, walletAddress: string)
         if (tokenBalance == null) { //no existe aún, al crearlo se actualiza/inicializa
             loadTokenBalance(tokenAddress, walletAddress);
         } else { //actualizar si ya existía
-            updateBalance(tokenAddress, walletAddress);
+            //updateBalance(tokenAddress, walletAddress);
     
-            tokenBalance.save();
+            //tokenBalance.save();
         }
     }
 }
@@ -148,13 +148,13 @@ function loadTokenBalance(tokenAddress: Address, walletAddress: string): void {
 
             let wallet = Wallet.load(walletAddress);
 
-            tokenBalance.wallet = wallet.id;
-
             if (wallet == null) { //Si no existe el wallet lo creo
                 wallet = new Wallet(walletAddress);
                 //Añado al wallet este tokenBalance ya que como lo acabo de crear no lo tendrá
                 wallet.balances.push(tokenBalance.id);
             }
+
+            tokenBalance.wallet = wallet.id;
 
             //si el wallet existía pero no tenia el tokenBalance, lo incluyo
             if (!wallet.balances.includes(id)) { 
@@ -164,7 +164,7 @@ function loadTokenBalance(tokenAddress: Address, walletAddress: string): void {
             wallet.save();
             tokenBalance.save();
 
-            updateBalance(tokenAddress, walletAddress);
+            //updateBalance(tokenAddress, walletAddress);
         }
     }
 }
