@@ -2,7 +2,7 @@ import { Address } from "@graphprotocol/graph-ts"
 import { CreateName, ChangeWallet, ChangeOwner } from "../generated/NameService/NameService"
 import { Name, Wallet } from "../generated/schema"
 
-import { loadWallet } from "./identityFactory"
+import { loadWallet } from "./wallet"
 
 export function handleCreateName(event: CreateName): void {
     setWallet(event.params.name, event.params.wallet.toHexString());
@@ -30,7 +30,7 @@ function setWallet(id: string, wallet: string): void {
 }
 
 function setName(walletAddress: Address, name: string): void {
-    loadWallet(walletAddress);
+    loadWallet(walletAddress, true);
     let wallet = Wallet.load(walletAddress.toHexString());
 
     wallet.name = name;
