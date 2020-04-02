@@ -9,7 +9,7 @@ export function handleTokenCreated(event: TokenCreated): void {
     addToken(event.params._address);
 }
 
-function addToken(tokenAddress: Address): void {
+export function addToken(tokenAddress: Address): void {
     let token = Token.load(tokenAddress.toHexString());
 
     if (token == null) {
@@ -20,6 +20,7 @@ function addToken(tokenAddress: Address): void {
         token.tokenName = contract.name();
         token.tokenDecimals = contract.decimals();
         token.totalSupply = contract.totalSupply().toBigDecimal();
+        token.holders = [];
 
         TokenTemplate.create(tokenAddress);
     }

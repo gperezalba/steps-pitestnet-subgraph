@@ -11,10 +11,34 @@ import {
 import { Token as TokenContract } from "../generated/templates/Token/Token"
 
 import { pushWalletTransaction } from "./wallet"
+import { addToken } from "./tokenFactory"
 
 export function handleTransfer(event: Transfer): void {
-    //addToken(event.address);
+    addToken(event.address);
+    addTokenHolder(event.address.toHexString(), event.params.to.toHexString());
+    //updateTokenBalance(event.address, event.params.to.toHexString());
+    //updateTokenBalance(event.address, event.params.from.toHexString());
     newTransaction(event);
+}
+
+/***************************************************************/
+// TOKEN
+/***************************************************************/
+
+function addTokenHolder(tokenAddress: string, holder: string): void {
+    let token = Token.load(tokenAddress);
+
+    if (token !== null) { //Si el token no existe no hago nada
+
+        let currentHolders = token.holders;
+
+        //Si el holder no está en el array ya, lo incluyo
+        if (!currentHolders.includes(holder)) {
+            currentHolders.push(holder);
+            token.holders = currentHolders;
+            token.save();
+        }
+    }
 }
 
 /***************************************************************/
