@@ -63,7 +63,7 @@ export function handleTransfer(event: Transfer): void {
     pushWalletBankTransaction(tx as Transaction, tx.from.toString());
 }
 
-export function pushWalletTransaction(tx: Transaction, walletAddress: string): void {
+export function pushWalletTransaction(tx: Transaction, walletAddress: Address): void {
     let token = Token.load(Address.fromString(tx.currency));
 
     if (token !== null) {
@@ -79,7 +79,7 @@ export function pushWalletTransaction(tx: Transaction, walletAddress: string): v
     }
 }
 
-export function pushWalletBankTransaction(tx: Transaction, walletAddress: string): void {
+export function pushWalletBankTransaction(tx: Transaction, walletAddress: Address): void {
     let token = Token.load(Address.fromString(tx.currency));
 
     if (token !== null) {
