@@ -64,7 +64,9 @@ export function handleTransfer(event: Transfer): void {
 }
 
 export function pushWalletTransaction(tx: Transaction, walletAddress: string): void {
-    let token = Token.load(Address.fromString(tx.currency));
+    let currency = tx.currency as string;
+    let tokenAddress = Address.fromString(currency) as Address;
+    let token = Token.load(tokenAddress);
 
     if (token !== null) {
 
@@ -81,7 +83,8 @@ export function pushWalletTransaction(tx: Transaction, walletAddress: string): v
 
 export function pushWalletBankTransaction(tx: Transaction, walletAddress: string): void {
     let currency = tx.currency as string;
-    let token = Token.load(Address.fromString(currency));
+    let tokenAddress = Address.fromString(currency) as Address;
+    let token = Token.load(tokenAddress);
 
     if (token !== null) {
 
