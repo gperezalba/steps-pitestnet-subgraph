@@ -31,17 +31,17 @@ function addTokenHolder(tokenAddress: string, holder: string): void {
 
     if (token !== null) { //Si el token no existe no hago nada
         let id = tokenAddress.toString().concat('-').concat(holder);
-        /*let tokenBalance = TokenBalance.load(id);
+        let tokenBalance = TokenBalance.load(id);
 
         if (tokenBalance == null) {
             loadTokenBalance(Address.fromString(tokenAddress), holder);
-        }*/
+        }
 
         let currentHolders = token.holders;
 
         //Si el holder no está en el array ya, lo incluyo
-        if (!currentHolders.includes(id)) {
-            currentHolders.push(id);
+        if (!currentHolders.includes(tokenBalance.id)) {
+            currentHolders.push(tokenBalance.id);
             token.holders = currentHolders;
             token.save();
         }
@@ -125,14 +125,9 @@ export function updateTokenBalance(tokenAddress: Address, walletAddress: string)
         let tokenBalance = TokenBalance.load(id);
 
         if (tokenBalance == null) { //no existe aún, al crearlo se actualiza/inicializa
-            //loadTokenBalance(tokenAddress, walletAddress);
+            loadTokenBalance(tokenAddress, walletAddress);
         } else { //actualizar si ya existía
-            /*if (tokenAddress == Address.fromI32(0)) {
-                tokenBalance.balance = getBalance(Address.fromString(walletAddress));
-            } else {
-                let token = TokenContract.bind(tokenAddress);
-                tokenBalance.balance = token.balanceOf(Address.fromString(walletAddress)).toBigDecimal();
-            }*/
+            updateBalance(tokenAddress, walletAddress);
     
             tokenBalance.save();
         }
@@ -169,8 +164,19 @@ function loadTokenBalance(tokenAddress: Address, walletAddress: string): void {
             wallet.save();
             tokenBalance.save();
 
-            updateTokenBalance(tokenAddress, walletAddress);
+            updateBalance(tokenAddress, walletAddress);
         }
     }
 }
 
+function updateBalance(tokenAddress: Address, walletAddress: string): void {
+    let id = tokenAddress.toHexString().concat('-').concat(walletAddress);
+    let tokenBalance = TokenBalance.load(id);
+    
+    if (tokenAddress == Address.fromI32(0)) {
+        //tokenBalance.balance = getBalance(Address.fromString(walletAddress));
+    } else {
+        let token = TokenContract.bind(tokenAddress);
+        tokenBalance.balance = token.balanceOf(Address.fromString(walletAddress)).toBigDecimal();
+    }
+}
