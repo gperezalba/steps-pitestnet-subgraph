@@ -48,8 +48,8 @@ export function newTransaction(event: Transfer): void {
         handleTokenBurn(event.address.toString(), event.params.value.toBigDecimal());
     }*/
 
-    pushWalletTransaction(tx as Transaction, event.params.to.toString());
-    pushWalletTransaction(tx as Transaction, event.params.from.toString());
+    pushWalletTransaction(tx as Transaction, event.params.to.toHexString());
+    pushWalletTransaction(tx as Transaction, event.params.from.toHexString());
 }
 
 export function createTransaction(
