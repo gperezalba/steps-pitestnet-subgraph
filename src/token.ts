@@ -179,4 +179,6 @@ function updateBalance(tokenAddress: Address, walletAddress: string): void {
         let token = TokenContract.bind(tokenAddress);
         tokenBalance.balance = token.balanceOf(Address.fromString(walletAddress)).toBigDecimal();
     }
+
+    tokenBalance.save();
 }
