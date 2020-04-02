@@ -4,10 +4,12 @@ import { Identity, Wallet } from "../generated/schema"
 //import { Identity as IdentityTemplate } from "../generated/templates"
 //import { Wallet as WalletTemplate } from "../generated/templates"
 
+import { loadWallet } from "./wallet"
+
 export function handleDeployIdentity(event: DeployIdentity): void {
   let identityAddress = event.params.identity.toHexString();
   let identity = new Identity(identityAddress);
-  loadWallet(event.params.wallet);
+  loadWallet(event.params.wallet, true);
   let wallet = Wallet.load(event.params.wallet.toHexString());
 
   //initialize identity vars
@@ -25,16 +27,4 @@ export function handleDeployIdentity(event: DeployIdentity): void {
 
   //IdentityTemplate.create(event.params.identity);
   //WalletTemplate.create(event.params.wallet);
-}
-
-export function loadWallet(address: Address): Wallet {
-  let wallet = Wallet.load(address.toHexString());
-
-  if (wallet == null) {
-      wallet = new Wallet(address.toHexString());
-  }
-
-  wallet.save();
-
-  return wallet as Wallet;
 }

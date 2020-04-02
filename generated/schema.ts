@@ -337,23 +337,6 @@ export class Wallet extends Entity {
     this.set("isBankUser", Value.fromBoolean(value));
   }
 
-  get tx(): string | null {
-    let value = this.get("tx");
-    if (value === null) {
-      return null;
-    } else {
-      return value.toString();
-    }
-  }
-
-  set tx(value: string | null) {
-    if (value === null) {
-      this.unset("tx");
-    } else {
-      this.set("tx", Value.fromString(value as string));
-    }
-  }
-
   get balances(): Array<string> | null {
     let value = this.get("balances");
     if (value === null) {
