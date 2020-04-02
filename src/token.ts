@@ -12,12 +12,13 @@ import { Token as TokenContract } from "../generated/templates/Token/Token"
 
 import { pushWalletTransaction } from "./wallet"
 import { addToken } from "./tokenFactory"
+import { zeroBD } from "./helpers"
 
 export function handleTransfer(event: Transfer): void {
     addToken(event.address);
+    updateTokenBalance(event.address, event.params.to.toHexString());
+    updateTokenBalance(event.address, event.params.from.toHexString());
     addTokenHolder(event.address.toHexString(), event.params.to.toHexString());
-    //updateTokenBalance(event.address, event.params.to.toHexString());
-    //updateTokenBalance(event.address, event.params.from.toHexString());
     newTransaction(event);
 }
 
@@ -29,12 +30,18 @@ function addTokenHolder(tokenAddress: string, holder: string): void {
     let token = Token.load(tokenAddress);
 
     if (token !== null) { //Si el token no existe no hago nada
+        let id = tokenAddress.toString().concat('-').concat(holder);
+        let tokenBalance = TokenBalance.load(id);
+
+        if (tokenBalance == null) {
+            loadTokenBalance(Address.fromString(tokenAddress), holder);
+        }
 
         let currentHolders = token.holders;
 
         //Si el holder no está en el array ya, lo incluyo
-        if (!currentHolders.includes(holder)) {
-            currentHolders.push(holder);
+        if (!currentHolders.includes(tokenBalance.id)) {
+            currentHolders.push(tokenBalance.id);
             token.holders = currentHolders;
             token.save();
         }
@@ -104,3 +111,65 @@ export function createTransaction(
 
     return tx as Transaction;
 }
+
+/***************************************************************/
+// TOKEN BALANCE
+/***************************************************************/
+
+export function updateTokenBalance(tokenAddress: Address, walletAddress: string): void {
+    let token = Token.load(tokenAddress.toString());
+
+    if (token !== null) { //Si el token no existe no hago nada
+
+        let tokenBalance = TokenBalance.load(tokenAddress.toString());
+
+        if (tokenBalance == null) { //no existe aún, al crearlo se actualiza/inicializa
+            loadTokenBalance(tokenAddress, walletAddress);
+        } else { //actualizar si ya existía
+            /*if (tokenAddress == Address.fromI32(0)) {
+                tokenBalance.balance = getBalance(Address.fromString(walletAddress));
+            } else {
+                let token = TokenContract.bind(tokenAddress);
+                tokenBalance.balance = token.balanceOf(Address.fromString(walletAddress)).toBigDecimal();
+            }*/
+    
+            tokenBalance.save();
+        }
+    }
+}
+
+function loadTokenBalance(tokenAddress: Address, walletAddress: string): void {
+    let token = Token.load(tokenAddress.toString());
+
+    if (token !== null) { //Si el token no existe no hago nada
+        let id = tokenAddress.toString().concat('-').concat(walletAddress);
+        let tokenBalance = TokenBalance.load(id);
+        
+        if (tokenBalance == null) { //Si no existe el tokenBalance lo creo
+            tokenBalance = new TokenBalance(id);
+            tokenBalance.token = token.id;
+            tokenBalance.balance = zeroBD();
+
+            let wallet = Wallet.load(walletAddress);
+
+            tokenBalance.wallet = wallet.id;
+
+            if (wallet == null) { //Si no existe el wallet lo creo
+                wallet = new Wallet(walletAddress);
+                //Añado al wallet este tokenBalance ya que como lo acabo de crear no lo tendrá
+                wallet.balances.push(tokenBalance.id);
+            }
+
+            //si el wallet existía pero no tenia el tokenBalance, lo incluyo
+            if (!wallet.balances.includes(id)) { 
+                wallet.balances.push(tokenBalance.id);
+            }
+
+            wallet.save();
+            tokenBalance.save();
+
+            updateTokenBalance(tokenAddress, walletAddress);
+        }
+    }
+}
+
