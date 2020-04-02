@@ -92,10 +92,14 @@ export function pushWalletBankTransaction(tx: Transaction, walletAddress: string
             wallet.bankTransactions.push(tx.id);
         }*/
 
-        let wallet = new Wallet(walletAddress);
+        //let wallet = new Wallet(walletAddress);
     
-        wallet.save();
+        //wallet.save();
     }
+
+    let wallet = new Wallet(walletAddress);
+    
+    wallet.save();
 }
 
 export function loadWallet(address: Address): Wallet {
