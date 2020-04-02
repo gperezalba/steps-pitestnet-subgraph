@@ -59,18 +59,19 @@ export function handleTransfer(event: Transfer): void {
 
     bankTransaction.save();*/
 
-    pushWalletBankTransaction(tx as Transaction, tx.to.toHexString());
-    pushWalletBankTransaction(tx as Transaction, tx.from.toHexString());
+    pushWalletBankTransaction(tx as Transaction, tx.to.toString());
+    pushWalletBankTransaction(tx as Transaction, tx.from.toString());
 }
 
 export function pushWalletTransaction(tx: Transaction, walletAddress: string): void {
-    let token = TokenContract.bind(Address.fromString(tx.currency));
+    let token = Token.load(Address.fromString(tx.currency));
 
     if (token !== null) {
 
-        let wallet = loadWallet(walletAddress);
+        let wallet = loadWallet(Address.fromString(walletAddress));
+        let txs = wallet.transactions;
     
-        if (!wallet.transactions.includes(tx.id)) {
+        if (!txs.includes(tx.id)) {
             wallet.transactions.push(tx.id);
         }
     
@@ -79,11 +80,11 @@ export function pushWalletTransaction(tx: Transaction, walletAddress: string): v
 }
 
 export function pushWalletBankTransaction(tx: Transaction, walletAddress: string): void {
-    let token = TokenContract.bind(Address.fromString(tx.currency));
+    let token = Token.load(Address.fromString(tx.currency));
 
     if (token !== null) {
 
-        let wallet = loadWallet(walletAddress);
+        let wallet = loadWallet(Address.fromString(walletAddress));
     
         if (!wallet.bankTransactions.includes(tx.id)) {
             wallet.bankTransactions.push(tx.id);
@@ -93,11 +94,11 @@ export function pushWalletBankTransaction(tx: Transaction, walletAddress: string
     }
 }
 
-export function loadWallet(address: string): Wallet {
-    let wallet = Wallet.load(address);
+export function loadWallet(address: Address): Wallet {
+    let wallet = Wallet.load(address.toString());
     
     if (wallet == null) {
-        wallet = new Wallet(address);
+        wallet = new Wallet(address.toString());
     }
 
     wallet.save();

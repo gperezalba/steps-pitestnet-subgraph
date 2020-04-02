@@ -328,6 +328,15 @@ export class Wallet extends Entity {
     }
   }
 
+  get isBankUser(): boolean {
+    let value = this.get("isBankUser");
+    return value.toBoolean();
+  }
+
+  set isBankUser(value: boolean) {
+    this.set("isBankUser", Value.fromBoolean(value));
+  }
+
   get balances(): Array<string> | null {
     let value = this.get("balances");
     if (value === null) {
