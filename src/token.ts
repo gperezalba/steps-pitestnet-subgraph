@@ -10,6 +10,8 @@ import {
 
 import { Token as TokenContract } from "../generated/templates/Token/Token"
 
+import { pushWalletTransaction } from "./wallet"
+
 export function handleTransfer(event: Transfer): void {
     //addToken(event.address);
     newTransaction(event);
@@ -46,8 +48,8 @@ export function newTransaction(event: Transfer): void {
         handleTokenBurn(event.address.toString(), event.params.value.toBigDecimal());
     }*/
 
-    //pushWalletTransaction(tx as Transaction, event.params.to.toString());
-    //pushWalletTransaction(tx as Transaction, event.params.from.toString());
+    pushWalletTransaction(tx as Transaction, event.params.to.toString());
+    pushWalletTransaction(tx as Transaction, event.params.from.toString());
 }
 
 export function createTransaction(
