@@ -16,8 +16,8 @@ import { zeroBD } from "./helpers"
 
 export function handleTransfer(event: Transfer): void {
     addToken(event.address);
-    updateTokenBalance(event.address, event.params.to.toHexString());
-    updateTokenBalance(event.address, event.params.from.toHexString());
+    //updateTokenBalance(event.address, event.params.to.toHexString());
+    //updateTokenBalance(event.address, event.params.from.toHexString());
     addTokenHolder(event.address.toHexString(), event.params.to.toHexString());
     newTransaction(event);
 }
@@ -31,17 +31,17 @@ function addTokenHolder(tokenAddress: string, holder: string): void {
 
     if (token !== null) { //Si el token no existe no hago nada
         let id = tokenAddress.toString().concat('-').concat(holder);
-        let tokenBalance = TokenBalance.load(id);
+        /*let tokenBalance = TokenBalance.load(id);
 
         if (tokenBalance == null) {
             loadTokenBalance(Address.fromString(tokenAddress), holder);
-        }
+        }*/
 
         let currentHolders = token.holders;
 
         //Si el holder no está en el array ya, lo incluyo
-        if (!currentHolders.includes(tokenBalance.id)) {
-            currentHolders.push(tokenBalance.id);
+        if (!currentHolders.includes(id)) {
+            currentHolders.push(id);
             token.holders = currentHolders;
             token.save();
         }
