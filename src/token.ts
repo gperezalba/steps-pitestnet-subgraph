@@ -127,7 +127,7 @@ export function updateTokenBalance(tokenAddress: Address, walletAddress: string)
         if (tokenBalance == null) { //no existe aún, al crearlo se actualiza/inicializa
             loadTokenBalance(tokenAddress, walletAddress);
         } else { //actualizar si ya existía
-            //updateBalance(tokenAddress, walletAddress);
+            updateBalance(tokenAddress, walletAddress);
     
             //tokenBalance.save();
         }
@@ -164,7 +164,7 @@ function loadTokenBalance(tokenAddress: Address, walletAddress: string): void {
             wallet.save();
             tokenBalance.save();
 
-            //updateBalance(tokenAddress, walletAddress);
+            updateBalance(tokenAddress, walletAddress);
         }
     }
 }
