@@ -75,7 +75,8 @@ export function pushWalletTransaction(tx: Transaction, walletAddress: string): v
         let txs = wallet.transactions;
     
         if (!txs.includes(tx.id)) {
-            wallet.transactions.push(tx.id);
+            txs.push(tx.id);
+            wallet.transactions = txs;
         }
     
         wallet.save();
@@ -88,15 +89,13 @@ export function pushWalletBankTransaction(tx: Transaction, walletAddress: string
 
     if (token !== null) {
 
-        /*let wallet = loadWallet(Address.fromString(walletAddress));
+        let wallet = loadWallet(Address.fromString(walletAddress));
     
         if (!wallet.bankTransactions.includes(tx.id)) {
             wallet.bankTransactions.push(tx.id);
-        }*/
-
-        //let wallet = new Wallet(walletAddress);
+        }
     
-        //wallet.save();
+        wallet.save();
     }
 }
 
