@@ -101,10 +101,10 @@ export function pushWalletBankTransaction(tx: Transaction, walletAddress: string
 }
 
 export function loadWallet(address: Address): Wallet {
-    let wallet = Wallet.load(address.toString());
-    
+    let wallet = Wallet.load(address.toHexString());
+
     if (wallet == null) {
-        wallet = new Wallet(address.toString());
+        wallet = new Wallet(address.toHexString());
     }
 
     wallet.save();

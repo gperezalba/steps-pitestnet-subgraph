@@ -29,7 +29,7 @@ export function handleDeployIdentity(event: DeployIdentity): void {
 
 export function loadWallet(address: Address): Wallet {
   let wallet = Wallet.load(address.toHexString());
-  
+
   if (wallet == null) {
       wallet = new Wallet(address.toHexString());
   }
