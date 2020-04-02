@@ -108,7 +108,6 @@ export function loadWallet(address: Address): Wallet {
 
     if (wallet == null) {
         wallet = new Wallet(address.toHexString());
-        wallet.balances = [];
         wallet.transactions = [];
         wallet.bankTransactions = [];
     }
