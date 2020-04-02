@@ -117,11 +117,11 @@ export function createTransaction(
 /***************************************************************/
 
 export function updateTokenBalance(tokenAddress: Address, walletAddress: string): void {
-    let token = Token.load(tokenAddress.toString());
+    let token = Token.load(tokenAddress.toHexString());
 
     if (token !== null) { //Si el token no existe no hago nada
 
-        let tokenBalance = TokenBalance.load(tokenAddress.toString());
+        let tokenBalance = TokenBalance.load(tokenAddress.toHexString());
 
         if (tokenBalance == null) { //no existe aún, al crearlo se actualiza/inicializa
             loadTokenBalance(tokenAddress, walletAddress);
@@ -139,10 +139,10 @@ export function updateTokenBalance(tokenAddress: Address, walletAddress: string)
 }
 
 function loadTokenBalance(tokenAddress: Address, walletAddress: string): void {
-    let token = Token.load(tokenAddress.toString());
+    let token = Token.load(tokenAddress.toHexString());
 
     if (token !== null) { //Si el token no existe no hago nada
-        let id = tokenAddress.toString().concat('-').concat(walletAddress);
+        let id = tokenAddress.toHexString().concat('-').concat(walletAddress);
         let tokenBalance = TokenBalance.load(id);
         
         if (tokenBalance == null) { //Si no existe el tokenBalance lo creo
