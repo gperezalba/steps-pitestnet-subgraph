@@ -30,7 +30,6 @@ type Wallet @entity {
     name: Name
     identity: Identity @derivedFrom(field: "wallet")
     isBankUser: Boolean
-    tx: String
     balances: [TokenBalance!] @derivedFrom(field: "wallet")
     transactions: [Transaction!]
     bankTransactions: [BankTransaction!]

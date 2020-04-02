@@ -81,7 +81,7 @@ export function pushWalletTransaction(tx: Transaction, walletAddress: string): v
             wallet.transactions = txs;
         }*/
 
-        txs.push(tx.id);
+        txs.push(tx.id.toString());
         wallet.transactions = txs;
     
         wallet.save();
