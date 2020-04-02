@@ -73,7 +73,6 @@ export function pushWalletTransaction(tx: Transaction, walletAddress: string): v
 
         let wallet = loadWallet(Address.fromString(walletAddress));
         wallet.isBankUser = true;
-        wallet.tx = tx.id
         let txs = wallet.transactions;
     
         /*if (!txs.includes(tx.id)) {
@@ -81,7 +80,7 @@ export function pushWalletTransaction(tx: Transaction, walletAddress: string): v
             wallet.transactions = txs;
         }*/
 
-        txs.push(tx.id.toString());
+        txs.push(tx.id);
         wallet.transactions = txs;
     
         wallet.save();
@@ -109,6 +108,9 @@ export function loadWallet(address: Address): Wallet {
 
     if (wallet == null) {
         wallet = new Wallet(address.toHexString());
+        wallet.balances = [];
+        wallet.transactions = [];
+        wallet.bankTransactions = [];
     }
 
     wallet.save();
