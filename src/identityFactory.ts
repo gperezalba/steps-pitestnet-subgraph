@@ -1,8 +1,8 @@
 import { Address } from "@graphprotocol/graph-ts"
 import { DeployIdentity } from "../generated/IdentityFactory/IdentityFactory"
 import { Identity, Wallet } from "../generated/schema"
-//import { Identity as IdentityTemplate } from "../generated/templates"
-//import { Wallet as WalletTemplate } from "../generated/templates"
+import { Identity as IdentityTemplate } from "../generated/templates"
+import { Wallet as WalletTemplate } from "../generated/templates"
 
 import { loadWallet } from "./wallet"
 
@@ -25,6 +25,6 @@ export function handleDeployIdentity(event: DeployIdentity): void {
   identity.save();
   wallet.save();
 
-  //IdentityTemplate.create(event.params.identity);
-  //WalletTemplate.create(event.params.wallet);
+  IdentityTemplate.create(event.params.identity);
+  WalletTemplate.create(event.params.wallet);
 }

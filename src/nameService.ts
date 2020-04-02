@@ -11,7 +11,7 @@ export function handleCreateName(event: CreateName): void {
 }
 
 export function handleChangeWallet(event: ChangeWallet): void {
-    setWallet(event.params.name, event.params.wallet.toString());
+    setWallet(event.params.name, event.params.wallet.toHexString());
 }
 
 export function handleChangeOwner(event: ChangeOwner): void {

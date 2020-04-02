@@ -13,3 +13,9 @@ export class Wallet extends DataSourceTemplate {
     DataSourceTemplate.create("Wallet", [address.toHex()]);
   }
 }
+
+export class Identity extends DataSourceTemplate {
+  static create(address: Address): void {
+    DataSourceTemplate.create("Identity", [address.toHex()]);
+  }
+}

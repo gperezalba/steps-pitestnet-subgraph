@@ -79,10 +79,7 @@ templates:
       language: wasm/assemblyscript
       file: ./src/token.ts
       entities:
-        - Token
-        - Transaction
-        - TokenBalance
-        - Wallet
+        - Transfer
       abis:
         - name: Token
           file: ./abis/Token.json
@@ -100,14 +97,36 @@ templates:
       language: wasm/assemblyscript
       file: ./src/wallet.ts
       entities:
-        - Wallet
-        - Token
-        - Transaction
-        - BankTransaction
-        - BankFee
+        - Transfer
       abis:
         - name: Wallet
           file: ./abis/Wallet.json
       eventHandlers:
         - event: Transfer(indexed address,indexed uint256,indexed address,uint256,uint256,bytes)
           handler: handleTransfer
+  - name: Identity
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: Identity
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/identity.ts
+      entities:
+        - Identity
+      abis:
+        - name: Identity
+          file: ./abis/Identity.json
+      eventHandlers:
+        - event: Forward(indexed address,uint256,bytes)
+          handler: handleForward
+        - event: FactoryForward(indexed uint256,address)
+          handler: handleFactoryForward
+        - event: NewOwner(address,address,address)
+          handler: handleNewOwner
+        - event: NewRecovery(address,address)
+          handler: handleNewRecovery
+        - event: NewWallet(address,address,address)
+          handler: handleNewWallet
