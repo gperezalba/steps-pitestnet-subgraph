@@ -71,8 +71,8 @@ export function pushWalletTransaction(tx: Transaction, walletAddress: string): v
 
     if (token !== null) {
 
-        loadWallet(Address.fromString(walletAddress));
-        let wallet = Wallet.load(walletAddress);
+        let wallet = loadWallet(Address.fromString(walletAddress));
+        wallet.isBankUser = true;
         let txs = wallet.transactions;
     
         /*if (!txs.includes(tx.id)) {
