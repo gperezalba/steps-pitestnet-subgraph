@@ -32,7 +32,7 @@ export function handleTransfer(event: Transfer): void {
         );
     }
 
-    /*let bankTxId = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
+    let bankTxId = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
     let bankTransaction = BankTransaction.load(bankTxId);
 
     if (bankTransaction == null) {
@@ -57,7 +57,7 @@ export function handleTransfer(event: Transfer): void {
 
     bankTransaction.bankFee = bankFee.id;
 
-    bankTransaction.save();*/
+    bankTransaction.save();
 
     //pushWalletBankTransaction(tx as Transaction, tx.to.toHexString());
     //pushWalletBankTransaction(tx as Transaction, tx.from.toHexString());
