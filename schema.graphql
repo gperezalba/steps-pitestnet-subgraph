@@ -33,6 +33,7 @@ type Wallet @entity {
     balances: [TokenBalance!] @derivedFrom(field: "wallet")
     transactions: [Transaction!]
     bankTransactions: [BankTransaction!]
+    aux: String
 }
 
 type Name @entity {

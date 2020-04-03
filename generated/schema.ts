@@ -390,6 +390,23 @@ export class Wallet extends Entity {
       );
     }
   }
+
+  get aux(): string | null {
+    let value = this.get("aux");
+    if (value === null) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set aux(value: string | null) {
+    if (value === null) {
+      this.unset("aux");
+    } else {
+      this.set("aux", Value.fromString(value as string));
+    }
+  }
 }
 
 export class Name extends Entity {
