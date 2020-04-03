@@ -96,7 +96,7 @@ export function pushWalletBankTransaction(bankTx: BankTransaction, walletAddress
             wallet.bankTransactions = txs;
         }
 
-        if (token !== null) {
+        if (token == null) {
             wallet.aux = tx.currency;
         } else {
             wallet.aux = "nope";
