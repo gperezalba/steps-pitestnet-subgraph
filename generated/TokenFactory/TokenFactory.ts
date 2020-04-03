@@ -49,6 +49,28 @@ export class TokenCreated__Params {
   }
 }
 
+export class NewHolders extends EthereumEvent {
+  get params(): NewHolders__Params {
+    return new NewHolders__Params(this);
+  }
+}
+
+export class NewHolders__Params {
+  _event: NewHolders;
+
+  constructor(event: NewHolders) {
+    this._event = event;
+  }
+
+  get tokenAddress(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get holders(): Array<Address> {
+    return this._event.parameters[1].value.toAddressArray();
+  }
+}
+
 export class TokenFactory extends SmartContract {
   static bind(address: Address): TokenFactory {
     return new TokenFactory("TokenFactory", address);
@@ -106,6 +128,40 @@ export class TokenFactory extends SmartContract {
     }
     let value = result.value;
     return CallResult.fromValue(value[0].toBoolean());
+  }
+}
+
+export class AddHoldersCall extends EthereumCall {
+  get inputs(): AddHoldersCall__Inputs {
+    return new AddHoldersCall__Inputs(this);
+  }
+
+  get outputs(): AddHoldersCall__Outputs {
+    return new AddHoldersCall__Outputs(this);
+  }
+}
+
+export class AddHoldersCall__Inputs {
+  _call: AddHoldersCall;
+
+  constructor(call: AddHoldersCall) {
+    this._call = call;
+  }
+
+  get _tokenAddress(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get _holders(): Array<Address> {
+    return this._call.inputValues[1].value.toAddressArray();
+  }
+}
+
+export class AddHoldersCall__Outputs {
+  _call: AddHoldersCall;
+
+  constructor(call: AddHoldersCall) {
+    this._call = call;
   }
 }
 

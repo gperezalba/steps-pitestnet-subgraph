@@ -1,9 +1,11 @@
 import { Address, BigDecimal } from "@graphprotocol/graph-ts"
-import { TokenCreated } from "../generated/TokenFactory/TokenFactory"
+import { TokenCreated, NewHolders } from "../generated/TokenFactory/TokenFactory"
 import { Token } from "../generated/schema"
 
 import { Token as TokenContract } from "../generated/templates/Token/Token"
 import { Token as TokenTemplate } from "../generated/templates"
+
+import { addTokenHolder, updateTokenBalance } from "./token"
 
 export function handleTokenCreated(event: TokenCreated): void {
     addToken(event.params._address);
@@ -26,4 +28,15 @@ export function addToken(tokenAddress: Address): void {
     }
 
     token.save();
+}
+
+export function handleNewHolders(event: NewHolders): void {
+    addToken(event.params.tokenAddress);
+
+    let holders = event.params.holders;
+
+    for (let i = 0; i < event.params.holders.length; i++) {
+        addTokenHolder(event.params.tokenAddress.toHexString(), holders[i].toHexString());
+        updateTokenBalance(event.params.tokenAddress, holders[i].toHexString());
+    }
 }

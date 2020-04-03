@@ -66,6 +66,8 @@ dataSources:
       eventHandlers:
         - event: TokenCreated(indexed address,string,string,address,uint256)
           handler: handleTokenCreated
+        - event: NewHolders(address,address[])
+          handler: handleNewHolders
       file: ./src/tokenFactory.ts
 templates:
   - name: Token

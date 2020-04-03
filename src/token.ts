@@ -12,7 +12,7 @@ import { Token as TokenContract } from "../generated/templates/Token/Token"
 
 import { pushWalletTransaction } from "./wallet"
 import { addToken } from "./tokenFactory"
-import { zeroBD } from "./helpers"
+import { zeroBD, getBalance } from "./helpers"
 
 export function handleTransfer(event: Transfer): void {
     addToken(event.address);
@@ -26,7 +26,7 @@ export function handleTransfer(event: Transfer): void {
 // TOKEN
 /***************************************************************/
 
-function addTokenHolder(tokenAddress: string, holder: string): void {
+export function addTokenHolder(tokenAddress: string, holder: string): void {
     let token = Token.load(tokenAddress);
 
     if (token !== null) { //Si el token no existe no hago nada
@@ -48,6 +48,25 @@ function addTokenHolder(tokenAddress: string, holder: string): void {
     }
 }
 
+export function handleTokenMint(id: string, amount: BigDecimal): void {
+    let token = Token.load(id);
+
+    if (token !== null) {
+        token.totalSupply = token.totalSupply.plus(amount);
+        token.save();
+    }
+}
+  
+export function handleTokenBurn(id: string, amount: BigDecimal): void {
+    //comprobar que el from sea el owner del moento sino no es un burn
+    let token = Token.load(id);
+
+    if (token !== null) {
+        token.totalSupply = token.totalSupply.minus(amount);
+        token.save();
+    }
+}
+
 /***************************************************************/
 // TRANSACTION
 /***************************************************************/
@@ -64,20 +83,20 @@ export function newTransaction(event: Transfer): void {
             event.params.to, 
             event.address.toHexString(), 
             event.params.value.toBigDecimal(), 
-            event.params.data, 
+            //event.params.data, 
             event.block.timestamp, 
             event.transaction.gasUsed.toBigDecimal().times(event.transaction.gasPrice.toBigDecimal()),
             false
         );
     }
 
-    /*if (event.params.from == Address.fromI32(0)) {
+    if (event.params.from == Address.fromI32(0)) {
         handleTokenMint(event.address.toString(), event.params.value.toBigDecimal());
     }
 
     if (event.params.to == Address.fromI32(0)) {
         handleTokenBurn(event.address.toString(), event.params.value.toBigDecimal());
-    }*/
+    }
 
     pushWalletTransaction(tx as Transaction, event.params.to.toHexString());
     pushWalletTransaction(tx as Transaction, event.params.from.toHexString());
@@ -89,7 +108,7 @@ export function createTransaction(
     to: Address,
     currency: string,
     amount: BigDecimal,
-    data: Bytes,
+    //data: Bytes,
     timestamp: BigInt,
     fee: BigDecimal,
     isBankTransaction: boolean
@@ -102,7 +121,7 @@ export function createTransaction(
     tx.to = to;
     tx.currency = currency;
     tx.amount = amount;
-    tx.data = data;
+    //tx.data = data;
     tx.timestamp = timestamp;
     tx.fee = fee;
     tx.isBankTransaction = isBankTransaction;
@@ -174,7 +193,7 @@ function updateBalance(tokenAddress: Address, walletAddress: string): void {
     let tokenBalance = TokenBalance.load(id);
     
     if (tokenAddress == Address.fromI32(0)) {
-        //tokenBalance.balance = getBalance(Address.fromString(walletAddress));
+        tokenBalance.balance = getBalance(Address.fromString(walletAddress));
     } else {
         let token = TokenContract.bind(tokenAddress);
         tokenBalance.balance = token.balanceOf(Address.fromString(walletAddress)).toBigDecimal();

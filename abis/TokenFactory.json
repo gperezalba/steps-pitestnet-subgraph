@@ -3,6 +3,24 @@
 		"constant": false,
 		"inputs": [
 			{
+				"name": "_tokenAddress",
+				"type": "address"
+			},
+			{
+				"name": "_holders",
+				"type": "address[]"
+			}
+		],
+		"name": "addHolders",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
 				"name": "name",
 				"type": "string"
 			},
@@ -85,6 +103,23 @@
 			}
 		],
 		"name": "TokenCreated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "tokenAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "holders",
+				"type": "address[]"
+			}
+		],
+		"name": "NewHolders",
 		"type": "event"
 	}
 ]
