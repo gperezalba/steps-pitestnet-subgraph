@@ -95,8 +95,9 @@ export function pushWalletBankTransaction(bankTx: BankTransaction, walletAddress
         if (!txs.includes(bankTx.id)) {
             txs.push(bankTx.id);
             wallet.bankTransactions = txs;
-            wallet.aux = "yeah"
         }
+
+        wallet.aux = "yeah";
     
         wallet.save();
     }
