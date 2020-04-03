@@ -87,7 +87,7 @@ export function pushWalletBankTransaction(bankTx: BankTransaction, walletAddress
     let tx = Transaction.load(bankTx.transaction);
     let token = Token.load(tx.currency);
 
-    //if (token !== null) {
+    if (token !== null) {
 
         let wallet = loadWallet(Address.fromString(walletAddress), true);
 
@@ -97,16 +97,9 @@ export function pushWalletBankTransaction(bankTx: BankTransaction, walletAddress
             txs.push(bankTx.id);
             wallet.bankTransactions = txs;
         }
-
-        if (token == null) {
-            wallet.aux = tx.currency;
-        } else {
-            wallet.aux = "nope";
-        }
-        
     
         wallet.save();
-    //}
+    }
 }
 
 export function loadWallet(address: Address, isBankUser: boolean): Wallet {
