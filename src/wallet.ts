@@ -23,7 +23,7 @@ export function handleTransfer(event: Transfer): void {
             txId, 
             event.address, 
             event.params.to, 
-            event.address.toHexString(), 
+            event.params.tokenAddress.toHexString(), 
             event.params.value.toBigDecimal(), 
             event.params.data, 
             event.block.timestamp, 
@@ -88,7 +88,7 @@ export function pushWalletBankTransaction(bankTx: BankTransaction, walletAddress
 
     if (token !== null) {
 
-        /*let wallet = loadWallet(Address.fromString(walletAddress), true);
+        let wallet = loadWallet(Address.fromString(walletAddress), true);
 
         let txs = wallet.bankTransactions;
     
@@ -97,7 +97,7 @@ export function pushWalletBankTransaction(bankTx: BankTransaction, walletAddress
             wallet.bankTransactions = txs;
         }
     
-        wallet.save();*/
+        wallet.save();
     }
 }
 
