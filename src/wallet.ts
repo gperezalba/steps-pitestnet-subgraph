@@ -49,7 +49,6 @@ export function handleTransfer(event: Transfer): void {
         bankFee = new BankFee(bankTxId);
     }
 
-    bankFee.transaction = bankTransaction.id;
     bankFee.kind = event.params.kind;
     bankFee.fee = event.params.commission.toBigDecimal();
 
