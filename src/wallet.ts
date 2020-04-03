@@ -30,6 +30,8 @@ export function handleTransfer(event: Transfer): void {
             event.transaction.gasUsed.toBigDecimal().times(event.transaction.gasPrice.toBigDecimal()),
             true
         );
+
+        tx = Transaction.load(txId);
     }
 
     let bankTxId = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
