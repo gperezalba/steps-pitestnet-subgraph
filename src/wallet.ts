@@ -58,8 +58,8 @@ export function handleTransfer(event: Transfer): void {
 
     bankTransaction.save();
 
-    pushWalletBankTransaction(tx as Transaction, tx.to.toHexString());
-    pushWalletBankTransaction(tx as Transaction, tx.from.toHexString());
+    pushWalletBankTransaction(bankTransaction as BankTransaction, tx.to.toHexString());
+    pushWalletBankTransaction(bankTransaction as BankTransaction, tx.from.toHexString());
 }
 
 export function pushWalletTransaction(tx: Transaction, walletAddress: string): void {
@@ -81,23 +81,24 @@ export function pushWalletTransaction(tx: Transaction, walletAddress: string): v
     }
 }
 
-export function pushWalletBankTransaction(tx: Transaction, walletAddress: string): void {
-    let currency = tx.currency as string;
-    let token = Token.load(currency);
+export function pushWalletBankTransaction(bankTx: BankTransaction, walletAddress: string): void {
+    //let tx = Transaction.load(bankTx.transaction);
+    //let currency = tx.currency as string;
+    //let token = Token.load(currency);
 
-    if (token !== null) {
+    //if (token !== null) {
 
         let wallet = loadWallet(Address.fromString(walletAddress), true);
 
         let txs = wallet.bankTransactions;
     
-        if (!txs.includes(tx.id)) {
-            txs.push(tx.id);
+        if (!txs.includes(bankTx.id)) {
+            txs.push(bankTx.id);
             wallet.bankTransactions = txs;
         }
     
         wallet.save();
-    }
+    //}
 }
 
 export function loadWallet(address: Address, isBankUser: boolean): Wallet {
