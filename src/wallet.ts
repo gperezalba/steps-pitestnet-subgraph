@@ -83,8 +83,7 @@ export function pushWalletTransaction(tx: Transaction, walletAddress: string): v
 
 export function pushWalletBankTransaction(bankTx: BankTransaction, walletAddress: string): void {
     let tx = Transaction.load(bankTx.transaction);
-    let currency = tx.currency as string;
-    let token = Token.load(currency);
+    let token = Token.load(tx.currency);
 
     //if (token !== null) {
 
@@ -97,7 +96,12 @@ export function pushWalletBankTransaction(bankTx: BankTransaction, walletAddress
             wallet.bankTransactions = txs;
         }
 
-        wallet.aux = "yeah";
+        if (token !== null) {
+            wallet.aux = tx.currency;
+        } else {
+            wallet.aux = "nope";
+        }
+        
     
         wallet.save();
     //}
