@@ -25,7 +25,7 @@ export function handleTransfer(event: Transfer): void {
             event.params.to, 
             event.address.toHexString(), 
             event.params.value.toBigDecimal(), 
-            //event.params.data, 
+            event.params.data, 
             event.block.timestamp, 
             event.transaction.gasUsed.toBigDecimal().times(event.transaction.gasPrice.toBigDecimal()),
             true
@@ -59,8 +59,8 @@ export function handleTransfer(event: Transfer): void {
 
     bankTransaction.save();*/
 
-    pushWalletBankTransaction(tx as Transaction, tx.to.toHexString());
-    pushWalletBankTransaction(tx as Transaction, tx.from.toHexString());
+    //pushWalletBankTransaction(tx as Transaction, tx.to.toHexString());
+    //pushWalletBankTransaction(tx as Transaction, tx.from.toHexString());
 }
 
 export function pushWalletTransaction(tx: Transaction, walletAddress: string): void {

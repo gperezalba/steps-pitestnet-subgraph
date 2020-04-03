@@ -83,7 +83,7 @@ export function newTransaction(event: Transfer): void {
             event.params.to, 
             event.address.toHexString(), 
             event.params.value.toBigDecimal(), 
-            //event.params.data, 
+            event.params.data, 
             event.block.timestamp, 
             event.transaction.gasUsed.toBigDecimal().times(event.transaction.gasPrice.toBigDecimal()),
             false
@@ -108,7 +108,7 @@ export function createTransaction(
     to: Address,
     currency: string,
     amount: BigDecimal,
-    //data: Bytes,
+    data: Bytes,
     timestamp: BigInt,
     fee: BigDecimal,
     isBankTransaction: boolean
@@ -121,7 +121,7 @@ export function createTransaction(
     tx.to = to;
     tx.currency = currency;
     tx.amount = amount;
-    //tx.data = data;
+    tx.data = data;
     tx.timestamp = timestamp;
     tx.fee = fee;
     tx.isBankTransaction = isBankTransaction;

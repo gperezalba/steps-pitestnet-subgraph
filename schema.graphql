@@ -64,7 +64,7 @@ type Transaction @entity {
     to: Bytes!
     currency: Token!
     amount: BigDecimal!
-    data: Bytes
+    data: Bytes!
     fee: BigDecimal!
     timestamp: BigInt!
     isBankTransaction: Boolean
