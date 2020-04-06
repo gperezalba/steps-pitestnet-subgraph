@@ -21,6 +21,8 @@ export function handleDeployIdentity(event: DeployIdentity): void {
   wallet.name = event.params.name;
   identity.lastModification = event.block.timestamp;
   identity.creationTime = event.block.timestamp;
+  identity.savingPots = [];
+  identity.loans = [];
 
   identity.save();
   wallet.save();

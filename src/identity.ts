@@ -11,7 +11,7 @@ export function handleForward(event: Forward): void {
     //updateLastModification(event.address.toString(), event.block.timestamp);
 }
 
-/******************export function handleFactoryForward(event: FactoryForward): void {
+export function handleFactoryForward(event: FactoryForward): void {
     updateLastModification(event.address.toString(), event.block.timestamp);
 }
 
@@ -39,7 +39,7 @@ export function handleIdentityNewWallet(event: NewWallet): void {
     let identity = Identity.load(event.address.toString());
 
     if (identity !== null) {
-        let wallet = loadWallet(event.params.current);
+        let wallet = loadWallet(event.params.current, true);
         identity.wallet = wallet.id;
         identity.save();
         updateLastModification(event.address.toString(), event.block.timestamp);
@@ -53,4 +53,4 @@ function updateLastModification(identityAddress: string, timestamp: BigInt): voi
         identity.lastModification = timestamp;
         identity.save();
     }
-}*/
+}

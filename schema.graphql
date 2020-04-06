@@ -11,11 +11,6 @@ type Identity @entity {
     loans: [Loan!]
 }
 
-type TokenFactory @entity {
-    id: ID!
-    tkName: String!
-}
-
 type Token @entity {
     id: ID! #token_address
     tokenDecimals: Int!
@@ -33,7 +28,6 @@ type Wallet @entity {
     balances: [TokenBalance!] @derivedFrom(field: "wallet")
     transactions: [Transaction!]
     bankTransactions: [BankTransaction!]
-    aux: String
 }
 
 type Name @entity {
